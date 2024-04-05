@@ -17,20 +17,17 @@ rangerSliders.map(($rangeSlider, $index) => {
     const $inputs = document.createElement('div');
     const $inputForm = document.createElement('div');
     const $contentInputForm =
-    `<label class="txt-field icon-right">
+        `<label class="txt-field icon-right">
         <span class="input-normal">Min.</span>
         <input type="number" id="" name="" min="${$min}" max="${$max}"
             oninput="javascript: if (this.value.length > 5) this.value = this.value.slice(0, 5);">
         <i class="material-icons euro">euro</i>
     </label>`;
     const $mainRange = document.createElement('div');
-    const $contentMainRange = 
-    `<input type="range" id="left" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $min }"
-        oninput="if(parseInt(this.value) > parseInt(this.parentNode.style.getPropertyValue('--value-b'))) { this.value = this.parentNode.style.getPropertyValue('--value-b'); } this.parentNode.style.setProperty('--value-a', this.value); this.parentNode.style.setProperty('--text-value-a', JSON.stringify(this.value));">
+    const $contentMainRange =
+        `<input type="range" id="left" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $min }">
     <output></output>
-    <input type="range" id="right" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $max }"
-        oninput="if(parseInt(this.value) < parseInt(this.parentNode.style.getPropertyValue('--value-a'))) { this.value = this.parentNode.style.getPropertyValue('--value-a'); } this.parentNode.style.setProperty('--value-b', this.value); this.parentNode.style.setProperty('--text-value-b', JSON.stringify(this.value));">
-        
+    <input type="range" id="right" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $max }">
     <output></output>
     <div class='range-slider__progress'></div>`;
 
@@ -47,9 +44,8 @@ rangerSliders.map(($rangeSlider, $index) => {
     $inputForm.innerHTML = $contentInputForm;
     $mainRange.classList.add('range-slider', 'flat');
     $mainRange.setAttribute('data-ticks-position', 'top');
-    $mainRange.setAttribute('style',`--min:${ $min }; --max:${ $max }; --value-a:${ $min }; --value-b:${ $max }; --suffix:"€"; --text-value-a:"${ $min }"; --text-value-b:"${ $max }";`);
+    $mainRange.setAttribute('style', `--min:${ $min }; --max:${ $max }; --value-a:${ $min }; --value-b:${ $max }; --suffix:"€"; --text-value-a:"${ $min }"; --text-value-b:"${ $max }";`);
     $mainRange.innerHTML = $contentMainRange;
-
 
     // Render
     $titleElement.appendChild($iconEye);
@@ -59,6 +55,9 @@ rangerSliders.map(($rangeSlider, $index) => {
     $rangeSlider.appendChild($inputs);
     $rangeSlider.appendChild($mainRange);
 
+    // Global
+    let $minInput = $inputs.children[0].querySelector('.input-normal');
+    let $maxInput = $inputs.children[1].querySelector('.input-normal');
 
     // Functions
     function camelCase($text) {
@@ -100,19 +99,19 @@ rangerSliders.map(($rangeSlider, $index) => {
     }
 
     function renameLabelInput() {
-        let $min = $inputs.children[0].querySelector('.input-normal');
-        let $max = $inputs.children[1].querySelector('.input-normal');
-        $min.textContent = 'Min.';
-        $max.textContent = 'Max.';
-        $min.nextElementSibling.classList.add('min');
-        $max.nextElementSibling.classList.add('max');
+
+        $minInput.textContent = 'Min.';
+        $maxInput.textContent = 'Max.';
+        $minInput.nextElementSibling.classList.add('min');
+        $maxInput.nextElementSibling.classList.add('max');
         for (let $index = 0; $index < $inputs.childNodes.length; $index++) {
-            const element = $inputs.children[$index];
-            element.setAttribute('id', $titleCamelCase + $index);
-            element.setAttribute('name', $titleCamelCase + $index);            
+            const $element = $inputs.children[$index];
+            $element.setAttribute('id', $titleCamelCase + $index);
+            $element.setAttribute('name', $titleCamelCase + $index);
         }
 
     }
+
     function calculateInput($value) {
         let $calculate = $inputs.children[$value == 'a' ? 0 : 1].querySelector('input');
         $calculate.onkeyup = (e) => {
@@ -163,7 +162,7 @@ rangerSliders.map(($rangeSlider, $index) => {
         if ($valueB < $valueA) {
             $rangeB.value = $valueA;
             $parent.style.setProperty('--value-b', $valueA);
-            $parent.querySelector('.right').value = $valueA;
+            $parent.querySelector('#right').value = $valueA;
             $__parent.querySelector('.max').value = $valueA;
         }
     }
@@ -187,7 +186,7 @@ rangerSliders.map(($rangeSlider, $index) => {
                 let $span = $input.parentElement.children[0];
                 let $label = $input.parentElement;
                 let $icon = $input.parentElement.querySelector('i.euro');
-        
+
                 // Apply focus styles to the input when moving the range slider thumb
                 $span.style.top = '-15px';
                 $span.style.color = 'var(--color-primary-light)';
@@ -197,6 +196,48 @@ rangerSliders.map(($rangeSlider, $index) => {
         });
     }
 
+    function onFocusInputReset($el) {
+        $el.onfocus = ($e) => {
+            $e.currentTarget.value = '';
+        };
+    }
+
+    function onBlurInputBefore($el, $id) {
+        $el.onblur = ($e) => {
+            if ($e.currentTarget.value === '') {
+                $e.currentTarget.value = $mainRange.querySelector($id).value;
+            }
+        };
+    }
+
+    function focusAndBlur() {
+        onFocusInputReset($minInput.nextElementSibling);
+        onFocusInputReset($maxInput.nextElementSibling);
+        onBlurInputBefore($minInput.nextElementSibling, '#left');
+        onBlurInputBefore($maxInput.nextElementSibling, '#right');
+    }
+
+    function limitRange($id) {
+        console.log($mainRange.querySelector($id))
+        $mainRange.querySelector($id).addEventListener('input', ($e) => {
+            if ($id == '#left') {
+                if (parseInt($e.currentTarget.value) > parseInt($e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`))) {
+                    $e.currentTarget.value = $e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`);
+                }
+            } else {
+                if (parseInt($e.currentTarget.value) < parseInt($e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`))) {
+                    $e.currentTarget.value = $e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`);
+                }
+            }
+            $e.currentTarget.parentNode.style.setProperty(`--value-${ $id == '#left' ? 'a':'b' }`, $e.currentTarget.value);
+            $e.currentTarget.parentNode.style.setProperty(`--text-value-${ $id == '#left' ? 'a':'b' }`, JSON.stringify($e.currentTarget.value));
+        });
+    }
+    
+    limitRange('#left');
+    limitRange('#right');
+
+    focusAndBlur();
     triggerInputForRange();
     calculateRange();
     calculateInputs();
