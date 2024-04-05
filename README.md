@@ -1,7 +1,7 @@
 # Input Range
-Este input es un solo elemento en donde añadirá los atributos según quiere lo que aparezca.
+Este input es un solo elemento.
 
-Sus atributos obligatorios son:
+Sus atributos únicos y obligatorios son:
 
 ```
 title="Título de mi Input"
