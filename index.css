@@ -1,0 +1,573 @@
+:root {
+    --color-primary-8: #07120c;
+    --color-primary-7: #0d2417;
+    --color-primary-6: #143623;
+    --color-primary-5: #1a482e;
+    --color-primary-4: #215b3a;
+    --color-primary-3: #286d46;
+    --color-primary-2: #2e7f51;
+    --color-primary-1: #35915d;
+    --color-primary: #3ba368;
+    --color-primary-light: #42b574;
+    --color-primary-light-1: #55bc82;
+    --color-primary-light-2: #68c490;
+    --color-primary-light-3: #7bcb9e;
+    --color-primary-light-4: #8ed3ac;
+    --color-primary-light-5: #a1daba;
+    --color-primary-light-6: #abd1bc;
+    --color-primary-light-7: #c6e9d5;
+    --color-primary-light-8: #d9f0e3;
+    --color-primary-light-9: #ecf8f1;
+    --color-primary-light-t-1: rgb(66, 181, 116, 0.1);
+    --color-primary-light-t-2: rgb(66, 181, 116, 0.2);
+    --color-primary-light-t-3: rgb(66, 181, 116, 0.3);
+    --color-primary-light-t-4: rgb(66, 181, 116, 0.4);
+    --color-primary-light-t-5: rgb(66, 181, 116, 0.5);
+    --color-primary-light-t-6: rgb(66, 181, 116, 0.6);
+    --color-primary-light-t-7: rgb(66, 181, 116, 0.7);
+    --color-primary-light-t-8: rgb(66, 181, 116, 0.8);
+    --color-primary-light-t-9: rgb(66, 181, 116, 0.9);
+    --color-alt-dark-9: #19000d;
+    --color-alt-dark-8: #33001a;
+    --color-alt-dark-7: #4c0027;
+    --color-alt-dark-6: #660034;
+    --color-alt-dark-5: #800041;
+    --color-alt-dark-4: #99004e;
+    --color-alt-dark-3: #b3005b;
+    --color-alt-dark-2: #cc0068;
+    --color-alt-dark-1: #e60075;
+    --color-alt: #cc0068;
+    --color-alt-light: #ff0082;
+    --color-alt-light-1: #ff1a8f;
+    --color-alt-light-2: #ff339b;
+    --color-alt-light-3: #ff4da8;
+    --color-alt-light-4: #ff66b4;
+    --color-alt-light-5: #ff80c1;
+    --color-alt-light-6: #ff99cd;
+    --color-alt-light-7: #ffb3da;
+    --color-alt-light-8: #ffcce6;
+    --color-alt-light-9: #ffe6f3;
+    --color-black: #000;
+    --color-black-1: rgba(0, 0, 0, 0.1);
+    --color-black-2: rgba(0, 0, 0, 0.2);
+    --color-black-3: rgba(0, 0, 0, 0.3);
+    --color-black-4: rgba(0, 0, 0, 0.4);
+    --color-black-5: rgba(0, 0, 0, 0.5);
+    --color-black-6: rgba(0, 0, 0, 0.6);
+    --color-black-7: rgba(0, 0, 0, 0.7);
+    --color-black-8: rgba(0, 0, 0, 0.8);
+    --color-black-9: rgba(0, 0, 0, 0.9);
+    --color-grey-8: #0f0f0f;
+    --color-grey-7: #1f1f1f;
+    --color-grey-6: #2e2e2e;
+    --color-grey-5: #3d3d3d;
+    --color-grey-4: #4d4d4d;
+    --color-grey-3: #5c5c5c;
+    --color-grey-2: #6b6b6b;
+    --color-grey-1: #7a7a7a;
+    --color-grey: #8a8a8a;
+    --color-grey-light: #999999;
+    --color-grey-light-1: #a3a3a3;
+    --color-grey-light-2: #adadad;
+    --color-grey-light-3: #b8b8b8;
+    --color-grey-light-4: #c2c2c2;
+    --color-grey-light-5: #cccccc;
+    --color-grey-light-6: #d6d6d6;
+    --color-grey-light-7: #e0e0e0;
+    --color-grey-light-8: #ebebeb;
+    --color-grey-light-9: #f5f5f5;
+    --color-highlight: #ffbf00;
+    --color-white: #fff;
+    --color-red: #ff0000;
+    --transparent: #fff0;
+    --color-dark: #212121;
+    --color-grey-lighter: #f5f5f5;
+    --color-text: #434343;
+    --trs: all 300ms ease-in-out;
+    --fadeIn: 300ms fadeIn ease-in-out;
+    --fadeIn4: 400ms fadeIn ease-in-out;
+    --fadeIn5: 500ms fadeIn ease-in-out;
+    --fadeInUp: 300ms fadeInUp ease-in-out;
+    --fadeInDown: 300ms fadeInDown ease-in-out;
+    --fadeInRight: 300ms fadeInRight ease-in-out;
+    --fadeInLeft: 300ms fadeInLeft ease-in-out;
+    --box-shadow: 1px 1px 10px #00000026;
+}
+
+*,
+*:before,
+*:after {
+    margin: 0px;
+    padding: 0px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    font-family: "Lato", sans-serif;
+}
+
+body {
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+
+/* Ocultar los botones de incremento y decremento en input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    /* Eliminar margen */
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    /* Firefox */
+}
+
+.range__slider {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filters-search {
+    width: 100%;
+    max-width: 380px;
+    margin: 0 0 15px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filters-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    position: relative;
+    margin: 1rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.filters-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -10px;
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-grey-light-7);
+}
+
+.filters-title i.salary-range {
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+.filters-title i.salary-range.hide {
+    animation: var(--fadeInUp);
+    display: none;
+}
+
+.filters-title :first-child {
+    color: var(--color-primary-light);
+}
+
+.filters-title :last-child {
+    color: var(--color-alt);
+}
+
+.hide {
+    animation: var(--fadeInUp);
+    display: none !important;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+/* .f-cat-title {
+    display:none;
+  } */
+.insert-data-range {
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 10px;
+    animation: var(--fadeInDown);
+}
+
+.input-form {
+    width: 100%;
+    cursor: pointer;
+}
+
+.input-form label.txt-field {
+    display: flex;
+    width: 100%;
+    border: 2px solid var(--color-grey-light-7);
+    padding: 10px;
+    position: relative;
+    border-radius: 10px;
+    background: white;
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    transition: 0.4s;
+    cursor: pointer;
+}
+
+.input-form label.txt-field input {
+    display: block;
+    width: 100%;
+    border: none;
+    background: transparent;
+    outline: none;
+    transition: var(--trs);
+    font-weight: bold;
+    color: var(--color-text);
+    padding-left: 5px;
+    font-size: 1.2rem;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.input-form label.txt-field span.input-normal {
+    background: white;
+    color: var(--color-grey-light-5);
+    -webkit-transition: 0.4s;
+    -o-transition: 0.4s;
+    position: absolute;
+    transition: 0.4s;
+    font-weight: bold;
+    display: flex;
+    padding: 3px;
+    top: 9px;
+    font-size: 1rem;
+}
+
+.input-form label.txt-field i.euro {
+    font-size: 1.2rem;
+    margin-top: 3px;
+    color: var(--color-grey-light-5);
+}
+
+.range-slider.grad {
+    --progress-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2) inset;
+    --progress-flll-shadow: var(--progress-shadow);
+    --fill-color: linear-gradient(to right, var(--color-primary-light-7), var(--color-primary-light));
+    --thumb-shadow: 0 0 4px rgba(0, 0, 0, 0.3),
+        -3px 9px 9px rgba(255, 255, 255, 0.33) inset,
+        -1px 3px 2px rgba(255, 255, 255, 0.33) inset,
+        0 0 0 99px var(--color-primary-light) inset;
+}
+
+.range-slider.grad input:hover {
+    --thumb-transform: scale(1.2);
+}
+
+.range-slider.grad input:active {
+    --thumb-shadow: inherit;
+    --thumb-transform: scale(1);
+}
+
+.range-slider.flat {
+    --thumb-size: 25px;
+    --track-height: calc(var(--thumb-size) / 3);
+    --progress-shadow: none;
+    --progress-flll-shadow: none;
+    --thumb-shadow: 0 0 0 7px var(--color-primary-light) inset, 0 0 0 99px white inset;
+    --thumb-shadow-hover: 0 0 0 9px var(--color-primary-light) inset,
+        0 0 0 99px white inset;
+    --thumb-shadow-active: 0 0 0 13px var(--color-primary-light) inset;
+}
+
+.range-slider {
+    animation: var(--fadeInDown);
+    --primary-color: #42b574;
+    --value-offset-y: var(--ticks-gap);
+    --value-active-color: white;
+    --value-background: transparent;
+    --value-background-hover: var(--color-primary-light);
+    --value-font: 700 14px/1 Arial;
+    --fill-color: var(--color-primary-light);
+    --progress-background: #eee;
+    --progress-radius: 20px;
+    --track-height: calc(var(--thumb-size) / 2);
+    --min-max-font: 14px Arial;
+    --min-max-opacity: 0.5;
+    --min-max-x-offset: 10%;
+    --thumb-size: 22px;
+    --thumb-color: white;
+    --thumb-shadow: 0 0 3px rgba(0, 0, 0, 0.4), 0 0 1px rgba(0, 0, 0, 0.5) inset,
+        0 0 0 99px var(--thumb-color) inset;
+    --thumb-shadow-active: 0 0 0 calc(var(--thumb-size) / 4) inset var(--thumb-color),
+        0 0 0 99px var(--color-primary-light) inset, 0 0 3px rgba(0, 0, 0, 0.4);
+    --thumb-shadow-hover: var(--thumb-shadow);
+    --ticks-thickness: 1px;
+    --ticks-height: 5px;
+    --ticks-gap: var(--ticks-height,
+            0);
+    --ticks-color: var(--color-grey-light-6);
+    --step: 1;
+    --ticks-count: Calc(var(--max) - var(--min)) / var(--step);
+    --maxTicksAllowed: 30;
+    --too-many-ticks: Min(1, Max(var(--ticks-count) - var(--maxTicksAllowed), 0));
+    --x-step: Max(var(--step),
+            var(--too-many-ticks) * (var(--max) - var(--min)));
+    --tickInterval: 100/ ((var(--max) - var(--min)) / var(--step)) * var(--tickEvery, 1);
+    --tickIntervalPerc: calc((100% - var(--thumb-size)) / ((var(--max) - var(--min)) / var(--x-step)) * var(--tickEvery, 1));
+    --value-a: Clamp(var(--min),
+            var(--value, 0),
+            var(--max));
+    --value-b: var(--value, 0);
+    --text-value-a: var(--text-value, "");
+    --completed-a: calc((var(--value-a) - var(--min)) / (var(--max) - var(--min)) * 100);
+    --completed-b: calc((var(--value-b) - var(--min)) / (var(--max) - var(--min)) * 100);
+    --ca: Min(var(--completed-a), var(--completed-b));
+    --cb: Max(var(--completed-a), var(--completed-b));
+    --thumbs-too-close: Clamp(-1,
+            1000 * (Min(1, Max(var(--cb) - var(--ca) - 5, -1)) + 0.001),
+            1);
+    --thumb-close-to-min: Min(1, Max(var(--ca) - 2, 0));
+    --thumb-close-to-max: Min(1, Max(98 - var(--cb), 0));
+    display: inline-block;
+    height: max(var(--track-height), var(--thumb-size));
+    background: linear-gradient(to right, var(--ticks-color) var(--ticks-thickness), transparent 1px) repeat-x;
+    background-size: var(--tickIntervalPerc) var(--ticks-height);
+    background-position-x: calc(var(--thumb-size) / 2 - var(--ticks-thickness) / 2);
+    background-position-y: var(--flip-y, bottom);
+    padding-bottom: var(--flip-y, var(--ticks-gap));
+    padding-top: calc(var(--flip-y) * var(--ticks-gap));
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+.range-slider[data-ticks-position=top] {
+    --flip-y: 1;
+}
+
+.range-slider::before,
+.range-slider::after {
+    --offset: calc(var(--thumb-size) / 2);
+    content: counter(x);
+    display: var(--show-min-max, block);
+    font: var(--min-max-font);
+    position: absolute;
+    bottom: var(--flip-y, -2.5ch);
+    top: calc(-2.5ch * var(--flip-y));
+    opacity: clamp(0, var(--at-edge), var(--min-max-opacity));
+    transform: translateX(calc(var(--min-max-x-offset) * var(--before, -1) * -1)) scale(var(--at-edge));
+    pointer-events: none;
+}
+
+.range-slider::before {
+    --before: 1;
+    --at-edge: var(--thumb-close-to-min);
+    counter-reset: x var(--min);
+    left: var(--offset);
+}
+
+.range-slider::after {
+    --at-edge: var(--thumb-close-to-max);
+    counter-reset: x var(--max);
+    right: var(--offset);
+}
+
+.range-slider__values {
+    position: relative;
+    top: 50%;
+    line-height: 0;
+    text-align: justify;
+    width: 100%;
+    pointer-events: none;
+    margin: 0 auto;
+    z-index: 5;
+}
+
+.range-slider__values::after {
+    content: "";
+    width: 100%;
+    display: inline-block;
+    height: 0;
+    background: red;
+}
+
+.range-slider__progress {
+    --start-end: calc(var(--thumb-size) / 2);
+    --clip-end: calc(100% - (var(--cb)) * 1%);
+    --clip-start: calc(var(--ca) * 1%);
+    --clip: inset(-20px var(--clip-end) -20px var(--clip-start));
+    position: absolute;
+    left: var(--start-end);
+    right: var(--start-end);
+    top: calc(var(--ticks-gap) * var(--flip-y, 0) + var(--thumb-size) / 2 - var(--track-height) / 2);
+    height: calc(var(--track-height));
+    background: var(--progress-background, #eee);
+    pointer-events: none;
+    z-index: -1;
+    border-radius: var(--progress-radius);
+}
+
+.range-slider__progress::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    -webkit-clip-path: var(--clip);
+    clip-path: var(--clip);
+    top: 0;
+    bottom: 0;
+    background: var(--fill-color, black);
+    box-shadow: var(--progress-flll-shadow);
+    z-index: 1;
+    border-radius: inherit;
+}
+
+.range-slider__progress::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    box-shadow: var(--progress-shadow);
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+.range-slider>input {
+    -webkit-appearance: none;
+    width: 100%;
+    height: var(--thumb-size);
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: calc(50% - Max(var(--track-height), var(--thumb-size)) / 2 + calc(var(--ticks-gap) / 2 * var(--flip-y, -1)));
+    cursor: -webkit-grab;
+    cursor: grab;
+    outline: none;
+    background: none;
+}
+
+.range-slider>input:not(:only-of-type) {
+    pointer-events: none;
+}
+
+.range-slider>input::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    transform: var(--thumb-transform);
+    border-radius: var(--thumb-radius, 50%);
+    background: var(--thumb-color);
+    box-shadow: var(--thumb-shadow);
+    border: none;
+    pointer-events: auto;
+    -webkit-transition: 0.1s;
+    transition: 0.1s;
+}
+
+.range-slider>input::-moz-range-thumb {
+    -moz-appearance: none;
+    appearance: none;
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    transform: var(--thumb-transform);
+    border-radius: var(--thumb-radius, 50%);
+    background: var(--thumb-color);
+    box-shadow: var(--thumb-shadow);
+    border: none;
+    pointer-events: auto;
+    -moz-transition: 0.1s;
+    transition: 0.1s;
+}
+
+.range-slider>input::-ms-thumb {
+    appearance: none;
+    height: var(--thumb-size);
+    width: var(--thumb-size);
+    transform: var(--thumb-transform);
+    border-radius: var(--thumb-radius, 50%);
+    background: var(--thumb-color);
+    box-shadow: var(--thumb-shadow);
+    border: none;
+    pointer-events: auto;
+    -ms-transition: 0.1s;
+    transition: 0.1s;
+}
+
+.range-slider>input:hover {
+    --thumb-shadow: var(--thumb-shadow-hover);
+}
+
+.range-slider>input:hover+output {
+    --value-background: var(--value-background-hover);
+    --y-offset: -5px;
+    color: var(--value-active-color);
+    box-shadow: 0 0 0 3px var(--value-background);
+}
+
+.range-slider>input:active {
+    --thumb-shadow: var(--thumb-shadow-active);
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+    z-index: 2;
+}
+
+.range-slider>input:active+output {
+    transition: 0s;
+}
+
+.range-slider>input:nth-of-type(1) {
+    --is-left-most: Clamp(0, (var(--value-a) - var(--value-b)) * 99999, 1);
+}
+
+.range-slider>input:nth-of-type(1)+output {
+    --value: var(--value-a);
+    --x-offset: calc(var(--completed-a) * -1%);
+}
+
+.range-slider>input:nth-of-type(1)+output:not(:only-of-type) {
+    --flip: calc(var(--thumbs-too-close) * -1);
+}
+
+.range-slider>input:nth-of-type(1)+output::after {
+    content: var(--prefix, "") var(--text-value-a) var(--suffix, "");
+}
+
+.range-slider>input:nth-of-type(2) {
+    --is-left-most: Clamp(0, (var(--value-b) - var(--value-a)) * 99999, 1);
+}
+
+.range-slider>input:nth-of-type(2)+output {
+    --value: var(--value-b);
+}
+
+.range-slider>input:only-of-type~.range-slider__progress {
+    --clip-start: 0;
+}
+
+.range-slider>input+output {
+    --flip: -1;
+    --x-offset: calc(var(--completed-b) * -1%);
+    --pos: calc(((var(--value) - var(--min)) / (var(--max) - var(--min))) * 100%);
+    pointer-events: none;
+    position: absolute;
+    z-index: 5;
+    background: var(--value-background);
+    border-radius: 10px;
+    padding: 2px 4px;
+    left: var(--pos);
+    transform: translate(var(--x-offset), calc(150% * var(--flip) - (var(--y-offset, 0px) + var(--value-offset-y)) * var(--flip)));
+    transition: all 0.12s ease-out, left 0s;
+}
+
+.range-slider>input+output::after {
+    content: var(--prefix, "") var(--text-value-b) var(--suffix, "");
+    font: var(--value-font);
+}
