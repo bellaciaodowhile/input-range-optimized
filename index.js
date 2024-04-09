@@ -10,6 +10,8 @@ rangerSliders.map(($rangeSlider, $index) => {
     const $min = $rangeSlider.attributes['min'].textContent;
     const $max = $rangeSlider.attributes['max'].textContent;
     const $step = $rangeSlider.attributes['step'].textContent;
+    const $label = $rangeSlider.hasAttribute('label') ? $rangeSlider.attributes['label'].textContent : '';
+    const $type = $rangeSlider.hasAttribute('type') ? true : '';
 
     // Elements
     const $titleElement = document.createElement('div');
@@ -20,16 +22,20 @@ rangerSliders.map(($rangeSlider, $index) => {
         `<label class="txt-field icon-right">
         <span class="input-normal">Min.</span>
         <input type="number" id="" name="" min="${$min}" max="${$max}"
-            oninput="javascript: if (this.value.length > 5) this.value = this.value.slice(0, 5);">
+            oninput="javascript: if (this.value.length > ${ $max.length }) this.value = this.value.slice(0, ${ $max.length });">
         <i class="material-icons euro">euro</i>
     </label>`;
     const $mainRange = document.createElement('div');
-    const $contentMainRange =
-        `<input type="range" id="left" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $min }">
+    let $contentMainRangeOrphan = `<input type="range" id="left" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $min }">
+    <output></output>
+    <div class='range-slider__progress'></div>`;
+    let $contentMainRangeNotOrpahn = `<input type="range" id="left" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $min }">
     <output></output>
     <input type="range" id="right" min="${ $min }" max="${ $max }" step="${ $step }" value="${ $max }">
     <output></output>
     <div class='range-slider__progress'></div>`;
+    const $contentMainRange = $type ? $contentMainRangeOrphan : $contentMainRangeNotOrpahn;
+
 
 
 
@@ -49,15 +55,19 @@ rangerSliders.map(($rangeSlider, $index) => {
 
     // Render
     $titleElement.appendChild($iconEye);
-    $inputs.appendChild($inputForm.cloneNode(true));
-    $inputs.appendChild($inputForm.cloneNode(true));
+    if ($type != '') {
+        $inputs.appendChild($inputForm.cloneNode(true));
+    } else {
+        $inputs.appendChild($inputForm.cloneNode(true));
+        $inputs.appendChild($inputForm.cloneNode(true));
+    }
     $rangeSlider.appendChild($titleElement);
     $rangeSlider.appendChild($inputs);
     $rangeSlider.appendChild($mainRange);
 
     // Global
     let $minInput = $inputs.children[0].querySelector('.input-normal');
-    let $maxInput = $inputs.children[1].querySelector('.input-normal');
+    let $maxInput = $type == '' ? $inputs.children[1].querySelector('.input-normal') : '';
 
     // Functions
     function camelCase($text) {
@@ -103,25 +113,70 @@ rangerSliders.map(($rangeSlider, $index) => {
         $minInput.textContent = 'Min.';
         $maxInput.textContent = 'Max.';
         $minInput.nextElementSibling.classList.add('min');
-        $maxInput.nextElementSibling.classList.add('max');
+        if (!$type) {
+            $maxInput.nextElementSibling.classList.add('max');
+        }
         for (let $index = 0; $index < $inputs.childNodes.length; $index++) {
             const $element = $inputs.children[$index];
             $element.setAttribute('id', $titleCamelCase + $index);
             $element.setAttribute('name', $titleCamelCase + $index);
         }
+        if ($label != '') {
+            $minInput.textContent = $label;
+        }
+        if ($type != '') {
+            $rangeSlider.querySelector('.range-slider').style.setProperty('--value-b', $min);
+            $rangeSlider.querySelector('.range-slider').style.setProperty('--text-value-b', $min);
+        }
 
     }
 
     function calculateInput($value) {
-        let $calculate = $inputs.children[$value == 'a' ? 0 : 1].querySelector('input');
+        let $calculate = $type != '' ? $inputs.children[0].querySelector('input') : $inputs.children[$value == 'a' ? 0 : 1].querySelector('input');
+
         $calculate.onkeyup = (e) => {
-            $mainRange.querySelector(`.range-slider input#${ $value == 'a' ? 'left' : 'right' }`).value = e.currentTarget.value;
-            $mainRange.style.setProperty(`--value-${ $value == 'a' ? 'a' : 'b' }`, e.currentTarget.value);
-            $mainRange.style.setProperty(`--text-value-${ $value == 'a' ? 'a' : 'b' }`, JSON.stringify(e.currentTarget.value));
-            if (e.currentTarget.value.length == 0) {
-                $mainRange.querySelector(`.range-slider input#${ $value == 'a' ? 'left' : 'right' }`).value = $value == 'a' ? $min : $max;
-                $mainRange.style.setProperty(`--value-${ $value == 'a' ? 'a' : 'b' }`, $value == 'a' ? $min : $max);
-                $mainRange.style.setProperty(`--text-value-${ $value == 'a' ? 'a' : 'b' }`, JSON.stringify($value == 'a' ? $min : $max));
+            if ($type == '') {
+                const $__max = $inputs.children[1].querySelector('input').value || $max;
+                $mainRange.querySelector(`.range-slider input#${ $value == 'a' ? 'left' : 'right' }`).value = e.currentTarget.value;
+                $mainRange.style.setProperty(`--value-${ $value == 'a' ? 'a' : 'b' }`, e.currentTarget.value);
+
+                if ($value == 'a') {
+                    if (e.currentTarget.value > $__max) {
+                        e.currentTarget.value = $__max;
+                        $mainRange.style.setProperty(`--text-value-a`, JSON.stringify($__max));
+                    } else {
+                        $mainRange.style.setProperty(`--text-value-a`, JSON.stringify(e.currentTarget.value));
+                    }
+                } else {
+                    if (e.currentTarget.value > $max) {
+                        e.currentTarget.value = $max;
+                        $mainRange.style.setProperty(`--text-value-b`, JSON.stringify($max));
+                    } else {
+                        $mainRange.style.setProperty(`--text-value-b`, JSON.stringify(e.currentTarget.value));
+                    }
+                }
+
+                if (e.currentTarget.value.length == 0) {
+                    $mainRange.querySelector(`.range-slider input#${ $value == 'a' ? 'left' : 'right' }`).value = $value == 'a' ? $min : $max;
+                    $mainRange.style.setProperty(`--value-${ $value == 'a' ? 'a' : 'b' }`, $value == 'a' ? $min : $max);
+                    $mainRange.style.setProperty(`--text-value-${ $value == 'a' ? 'a' : 'b' }`, JSON.stringify($value == 'a' ? $min : $max));
+                }
+            } else {
+                $mainRange.querySelector(`.range-slider input#left`).value = e.currentTarget.value;
+                $mainRange.style.setProperty(`--value-a`, e.currentTarget.value);
+                $mainRange.style.setProperty(`--text-value-a`, JSON.stringify(e.currentTarget.value));
+                
+                if (e.currentTarget.value > parseInt($max)) {
+                    e.currentTarget.value = $max;
+                    $mainRange.style.setProperty(`--value-a`, $max);
+                    $mainRange.style.setProperty(`--text-value-a`, JSON.stringify($max));
+                }
+
+                if (e.currentTarget.value.length == 0) {
+                    $mainRange.querySelector(`.range-slider input#left`).value = $min;
+                    $mainRange.style.setProperty(`--value-a`, $min);
+                    $mainRange.style.setProperty(`--text-value-a`, JSON.stringify($min));
+                }
             }
         }
     }
@@ -145,11 +200,18 @@ rangerSliders.map(($rangeSlider, $index) => {
             $parent.style.setProperty('--text-value-a', JSON.stringify($el.value));
             $parent.querySelector('#left').value = $el.value;
             $__parent.querySelector('.min').value = $el.value;
+            if ($type == '') $__parent.querySelector('.max').value = $valueB;
+            if ($type != '') {
+                $parent.style.setProperty('--value-b', $el.value);
+                $parent.style.setProperty('--text-value-b', JSON.stringify($el.value));
+                $parent.querySelector('#left').value = $el.value;
+            }
         } else if ($el === $rangeB) {
             $parent.style.setProperty('--value-b', $el.value);
             $parent.style.setProperty('--text-value-b', JSON.stringify($el.value));
             $parent.querySelector('#right').value = $el.value;
             $__parent.querySelector('.max').value = $el.value;
+            $__parent.querySelector('.min').value = $valueA;
         }
 
         // Check and adjust values ​​if necessary
@@ -177,22 +239,24 @@ rangerSliders.map(($rangeSlider, $index) => {
     }
 
     function triggerInputForRange() {
-        let $rangeSliders = $mainRange.querySelectorAll('.range-slider input[type="range"]');
-        let $inputsRangeSlider = [...document.querySelectorAll('.input-form input')];
-        $rangeSliders.forEach(slider => {
+        let $rangeSliders = [...$mainRange.querySelectorAll('.range-slider input[type="range"]')];
+        let $inputsRangeSlider = [...$rangeSlider.querySelectorAll('.input-form input')];
+        $rangeSliders.map((slider) => {
             slider.addEventListener('input', function () {
-                let $inputIndex = Array.from(this.parentNode.parentNode.querySelectorAll('input[type="range"]')).indexOf(this);
-                let $input = $inputsRangeSlider[$inputIndex];
-                let $span = $input.parentElement.children[0];
-                let $label = $input.parentElement;
-                let $icon = $input.parentElement.querySelector('i.euro');
+                for (let index = 0; index <= $inputsRangeSlider.length - 1; index++) {
+                    let $input = $inputsRangeSlider[index];
+                    let $span = $input.parentElement.children[0];
+                    let $label = $input.parentElement;
+                    let $icon = $input.parentElement.querySelector('i.euro');
 
-                // Apply focus styles to the input when moving the range slider thumb
-                $span.style.top = '-15px';
-                $span.style.color = 'var(--color-primary-light)';
-                $label.style.borderColor = 'var(--color-primary-light)';
-                $icon.style.color = 'var(--color-text)';
+                    // Apply focus styles to the input when moving the range slider thumb
+                    $span.style.top = '-15px';
+                    $span.style.color = 'var(--color-primary-light)';
+                    $label.style.borderColor = 'var(--color-primary-light)';
+                    $icon.style.color = 'var(--color-text)';
+                }
             });
+
         });
     }
 
@@ -211,29 +275,36 @@ rangerSliders.map(($rangeSlider, $index) => {
     }
 
     function focusAndBlur() {
-        onFocusInputReset($minInput.nextElementSibling);
-        onFocusInputReset($maxInput.nextElementSibling);
-        onBlurInputBefore($minInput.nextElementSibling, '#left');
-        onBlurInputBefore($maxInput.nextElementSibling, '#right');
+        if ($type != '') {
+            onFocusInputReset($minInput.nextElementSibling);
+            onBlurInputBefore($minInput.nextElementSibling, '#left');
+        } else {
+            onFocusInputReset($minInput.nextElementSibling);
+            onFocusInputReset($maxInput.nextElementSibling);
+            onBlurInputBefore($minInput.nextElementSibling, '#left');
+            onBlurInputBefore($maxInput.nextElementSibling, '#right');
+        }
+
     }
 
     function limitRange($id) {
-        console.log($mainRange.querySelector($id))
-        $mainRange.querySelector($id).addEventListener('input', ($e) => {
-            if ($id == '#left') {
-                if (parseInt($e.currentTarget.value) > parseInt($e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`))) {
-                    $e.currentTarget.value = $e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`);
+        if ($type == '') {
+            $mainRange.querySelector($id).addEventListener('input', ($e) => {
+                if ($id == '#left') {
+                    if (parseInt($e.currentTarget.value) > parseInt($e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`))) {
+                        $e.currentTarget.value = $e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`);
+                    }
+                } else {
+                    if (parseInt($e.currentTarget.value) < parseInt($e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`))) {
+                        $e.currentTarget.value = $e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`);
+                    }
                 }
-            } else {
-                if (parseInt($e.currentTarget.value) < parseInt($e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`))) {
-                    $e.currentTarget.value = $e.currentTarget.parentNode.style.getPropertyValue(`--value-${ $id == '#left' ? 'b' : 'a' }`);
-                }
-            }
-            $e.currentTarget.parentNode.style.setProperty(`--value-${ $id == '#left' ? 'a':'b' }`, $e.currentTarget.value);
-            $e.currentTarget.parentNode.style.setProperty(`--text-value-${ $id == '#left' ? 'a':'b' }`, JSON.stringify($e.currentTarget.value));
-        });
+                $e.currentTarget.parentNode.style.setProperty(`--value-${ $id == '#left' ? 'a':'b' }`, $e.currentTarget.value);
+                $e.currentTarget.parentNode.style.setProperty(`--text-value-${ $id == '#left' ? 'a':'b' }`, JSON.stringify($e.currentTarget.value));
+            });
+        }
     }
-    
+
     limitRange('#left');
     limitRange('#right');
 
