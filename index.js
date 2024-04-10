@@ -164,18 +164,23 @@ rangerSliders.map(($rangeSlider, $index) => {
             } else {
                 $mainRange.querySelector(`.range-slider input#left`).value = e.currentTarget.value;
                 $mainRange.style.setProperty(`--value-a`, e.currentTarget.value);
+                $mainRange.style.setProperty(`--value-b`, e.currentTarget.value);
                 $mainRange.style.setProperty(`--text-value-a`, JSON.stringify(e.currentTarget.value));
+                $mainRange.style.setProperty(`--text-value-b`, JSON.stringify(e.currentTarget.value));
                 
                 if (e.currentTarget.value > parseInt($max)) {
                     e.currentTarget.value = $max;
                     $mainRange.style.setProperty(`--value-a`, $max);
                     $mainRange.style.setProperty(`--text-value-a`, JSON.stringify($max));
+                    $mainRange.style.setProperty(`--text-value-b`, JSON.stringify($min));
                 }
 
                 if (e.currentTarget.value.length == 0) {
                     $mainRange.querySelector(`.range-slider input#left`).value = $min;
                     $mainRange.style.setProperty(`--value-a`, $min);
+                    $mainRange.style.setProperty(`--value-b`, $min);
                     $mainRange.style.setProperty(`--text-value-a`, JSON.stringify($min));
+                    $mainRange.style.setProperty(`--text-value-b`, JSON.stringify($min));
                 }
             }
         }
